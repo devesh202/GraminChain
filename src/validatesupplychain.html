@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validate Supplychain</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body style="background-color: black;">
+    <nav style="padding-right: 30px; padding-top: 25px; display: flex; flex-direction: row-reverse;">
+        <ul><a style="color: white; font-size: 18px;" href="">Logout</a></ul>
+        <ul><a style="color: white; font-size: 18px;" href="add_drug.html">Add Drug</a></ul>
+        <ul><a style="color: white; font-size: 18px;" href="drugtimeline.html">View Drug Status</a></ul>
+    </nav>
+    <h1 style="padding-top: 50px; color: #f76815; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif"  class="text-center">Validate Supplychain</h1>
+    <br>
+    <div style="padding-top: 50px;" class="container">
+        <div class="row-lg">
+        <div class="col-lg-4">
+        <form id="mailverf" style="font-size: 19px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+            <div class="form-group">
+              <label style="color: #f76815;">Enter EndUser's Mail Id</label>
+              <input style="border:none; color: white; height:4.2rem; font-size: 17px; background-color: black; box-shadow: 0 0 10px rgba(247, 104, 21, 0.829), 0 0 5px rgba(247, 104, 21, 0.829);" type="email" class="form-control" id="mailid" aria-describedby="emailHelp">
+              <short style="color: white; font-size: 17px;" id="info"></short>
+            </div>
+        </form>
+        </div>
+        <div style="padding-top: 30px;" class="col-lg-4"> 
+        <button type="button" style="color: #f76815; width: 15rem; background-color: black; border: 1px solid #f76815;" onclick="verify()" class="btn btn-lg">Check</button>
+        </div>
+    </div>
+    </div>
+    <br><br>
+    <div class="container">
+    <div class="row-lg">
+        <div class="col-lg-4">
+        <form style="font-size: 19px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+            <div class="form-group">
+              <label style="color: #f76815;">Enter Batch No</label>
+              <input style="border:none; color: white; height:4.2rem; font-size: 17px; background-color: black; box-shadow: 0 0 10px rgba(247, 104, 21, 0.829), 0 0 5px rgba(247, 104, 21, 0.829);" type="text" class="form-control" id="batchno" disabled>
+              <br>
+              <short style="color: white; font-size: 17px;" id="info1"></short>
+            </div>
+        </form>
+        </div>
+        <div style="padding-top: 30px;" class="col-lg-4"> 
+        <button id="btn" onclick="generate_code()" type="button" style="color: #f76815; width: 15rem; background-color: black; border: 1px solid #f76815;" class="btn btn-lg" disabled>Send Code</button>
+        </div>
+    </div> 
+    <div style="margin-left: 17rem; margin-top: -25rem;" class="col-lg-5">
+        <img src="assets/images/validate.png" style="width: 70rem; height: 55rem;">
+    </div>
+    </div>      
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-database.js"></script>
+    <script> 
+    function verify(){
+      var firebaseConfig = {
+      apiKey: "AIzaSyBA9dICs0ZDSvuvpxCiwJBmyYJgOmunhbA",
+      authDomain: "user-register-83859.firebaseapp.com",
+      projectId: "user-register-83859",
+      storageBucket: "user-register-83859.appspot.com",
+      messagingSenderId: "327374429262",
+      appId: "1:327374429262:web:ec4f5c3365f195c1def71f",
+      measurementId: "G-N37H2NLBEK"
+};
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  //Get Values
+  var mailid = document.getElementById("mailid").value; 
+  var ref = firebase.database().ref("messages");
+      ref.once("value", function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+      var email = childSnapshot.val().mailid; 
+      console.log(mailid);
+    if (email == mailid) {
+      document.getElementById("info").innerHTML="User validated! Generate secret code."
+      document.getElementById("batchno").disabled=false;
+      document.getElementById("btn").disabled=false;
+    } 
+    else{
+        document.getElementById("info").innerHTML="Not a valid end-user!";
+    }
+  });
+});
+  }
+    function generate_code(){
+        var batchno=document.getElementById("batchno").value; 
+        var mail=$("#mailid").val();
+        generatecode(batchno,mail);
+    }
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script> 
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body style="background-color: black; color: #ffffff;">
+    <nav style="padding-right: 30px; padding-top: 25px; display: flex; flex-direction: row-reverse;">
+        <ul><a style="color: white; font-size: 18px;" href="authentication/manufacturer-signin.html">Login</a></ul>
+    </nav>
+    <h1 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif"  class="text-center"></h1>
+    <br>
+    <div class="container">
+    <div class="row-lg">
+    <div class="col-lg-6">
+    
+    </div>
+    <!-- <div class="col-lg-6">
+        <img src="assets\images\reg1.png" style="width: 55rem; height: 50rem;">
+    </div> -->
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #000000;
+        }
+    
+        header {
+          background-color: #333;
+          color: #fff;
+          padding: 10px;
+          text-align: center;
+        }
+    
+        #inventory-list {
+          list-style: none;
+          padding: 0;
+        }
+    
+        .inventory-item {
+          background-color: #000000;
+          border: 1px solid #ddd;
+          margin: 10px;
+          padding: 15px;
+          border-radius: 5px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+    
+        .quantity-input {
+          width: 50px;
+          margin-left: auto;
+        }
+      </style>
+    </head>
+    <body>
+    
+      <header>
+        <h1>Inventory Management</h1>
+      </header>
+    
+      <div id="inventory-container">
+        <ul id="inventory-list"></ul>
+      </div>
+    
+      <script>
+        // Sample data for inventory items
+        const inventoryData = [
+          { id: 1, name: 'Item 1', quantity: 10 },
+          { id: 2, name: 'Item 2', quantity: 5 },
+          { id: 3, name: 'Item 3', quantity: 8 }
+        ];
+    
+        // Function to render inventory items
+        function renderInventory() {
+          const inventoryList = document.getElementById('inventory-list');
+          inventoryList.innerHTML = ''; // Clear previous items
+    
+          inventoryData.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.className = 'inventory-item';
+            listItem.innerHTML = `
+              <span>${item.name}</span>
+              <input type="number" class="quantity-input" value="${item.quantity}" id="quantity-${item.id}" onchange="updateQuantity(${item.id})">
+            `;
+            inventoryList.appendChild(listItem);
+          });
+        }
+    
+        // Function to update quantity
+        function updateQuantity(itemId) {
+          const quantityInput = document.getElementById(`quantity-${itemId}`);
+          const newQuantity = parseInt(quantityInput.value, 10);
+    
+          // Implement your logic to update quantity in the backend or perform any other actions
+          alert(`Quantity updated for item with ID ${itemId} - New Quantity: ${newQuantity}`);
+        }
+    
+        // Initial rendering
+        renderInventory();
+      </script>
+
+      <script src="app.js"></script>
+
+    </div>
+    </div>    
